@@ -4,7 +4,18 @@
 #include "native/unix.h"
 #include <fstream>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 namespace {
+    void setConsolePosition() {
+        #ifdef _WIN32
+                HWND consoleWindow = GetConsoleWindow();
+                SetWindowPos(consoleWindow, 0, 0, 0, 500, 500, SWP_NOSIZE | SWP_NOZORDER);
+        #endif
+    }
+
     constexpr int NUM_OPTIONS = 3;
     Config config;
 
