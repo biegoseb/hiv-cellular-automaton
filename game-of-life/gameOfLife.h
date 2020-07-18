@@ -5,7 +5,7 @@
 
 class GameOfLife : public CellularAutomaton {
     private:
-        enum Cell { On,Off };
+        enum Cell { Alive,Dead };
         std::vector<Cell> myCells;
     public:
         GameOfLife(const Config& config, const Application& app);
@@ -20,7 +20,7 @@ GameOfLife::GameOfLife(const Config & config, const Application& app)
         std::uniform_int_distribution<int> dist(0, 1);
         auto& cell = myCells[index];
         cell = (Cell)dist(range);
-        CellularAutomaton::setCellColor(x, y, cell == Cell::On ? sf::Color::Black : myConfig->fgColor);
+        CellularAutomaton::setCellColor(x, y, cell == Cell::Alive ? sf::Color::Black : myConfig->fgColor);
     });
 }
 
@@ -40,7 +40,7 @@ void GameOfLife::update() {
                     continue;
                 }
                 auto cell = myCells[getCellIndex(newX, newY)];
-                if (cell == Cell::On) {
+                if (cell == Cell::Alive) {
                     ++count;
                 }
             }
@@ -48,20 +48,20 @@ void GameOfLife::update() {
         int index = getCellIndex(x, y);
         auto cell = myCells[index];
         switch (cell) {
-            case Cell::On:
+            case Cell::Alive: /* Living cell with less than 2 or more than 3 living neighbors, dies  */
                 if (count < 2 || count > 3) {
-                    updates.emplace_back(loc, Cell::Off);
+                    updates.emplace_back(loc, Cell::Dead);
                 }
                 break;
-            case Cell::Off: /* Dead cell with 3 living neighbors, get reborn */
+            case Cell::Dead: /* Dead cell with 3 living neighbors, get reborn */
                 if (count == 3) {
-                    updates.emplace_back(loc, Cell::On);
+                    updates.emplace_back(loc, Cell::Alive);
                 }
                 break;
         } 
     });
     for (auto& update : updates) {
         myCells[getCellIndex(update.first.x, update.first.y)] = update.second;
-        CellularAutomaton::setCellColor(update.first.x, update.first.y, update.second == Cell::On ? myConfig->bgColor : myConfig->fgColor);
+        CellularAutomaton::setCellColor(update.first.x, update.first.y, update.second == Cell::Alive ? myConfig->bgColor : myConfig->fgColor);
     }
 }

@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "../util/random.h"
 
+const int MAX_HEALTH = 100;
+
 enum class CreatureType {
     predator = 0,
     prey = 1,
@@ -15,7 +17,6 @@ class Creature {
         CreatureType type;
         int health = MAX_HEALTH / 5;
     public:
-        constexpr static int MAX_HEALTH = 100;
         Creature();
         sf::Color getColor();
         CreatureType getType() const;

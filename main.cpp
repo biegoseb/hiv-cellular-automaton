@@ -1,8 +1,10 @@
 #include "application.h"
 #include "game-of-life/gameOfLife.h"
-//#include "predator-and-prey/predatorAndPrey.h"
+#include "predator-and-prey/predatorAndPrey.h"
 #include "native/unix.h"
 #include <fstream>
+
+/* Compilation: g++ main.cpp -o pnp.out -lsfml-graphics -lsfml-window -lsfml-system */
 
 #ifdef _WIN32
 #include <windows.h>
@@ -23,7 +25,7 @@ namespace {
         std::ifstream inFile("config.txt");
         if (!inFile.is_open()) {
             std::cout << "Unable to load config, making default settings\n";
-            config = {{ 1280, 720 }, 8 };
+            config = {{ 1280, 720 }, 10 };
             return;
         }
         std::string line;
@@ -76,8 +78,7 @@ int main() {
                 run<GameOfLife>();
                 break;
             case 2:
-                //run<PredatorAndPrey>();
-                std::cout << "Predator and Prey :D" << std::endl;
+                run<PredatorAndPrey>();
                 break;
             case NUM_OPTIONS:
                 exit = true;
