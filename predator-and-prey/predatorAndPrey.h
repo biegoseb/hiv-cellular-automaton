@@ -11,11 +11,9 @@ using std::vector;
 
 class PredatorAndPrey : public CellularAutomaton {
     private:
-        enum Cell { On, Off };
         void updatePredator(Creature& thisCreature, Creature& otherCreature);
         void updatePrey(Creature& thisCreature, Creature& otherCreature);
         vector<Creature> creatures;
-        vector<Cell> cells;
         sf::Text preyCountText;
         sf::Text predCountText;
         int preyCount = 0;

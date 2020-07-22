@@ -89,7 +89,7 @@ void Application::render() {
     //GUI
     myWindow.setView(myWindow.getDefaultView());
     myWindow.draw(myGuiText);
-    myFpsCounter.draw(myWindow);
+    //myFpsCounter.draw(myWindow);
 
     myWindow.display();
 }

@@ -1,10 +1,11 @@
 #include "application.h"
 #include "game-of-life/gameOfLife.h"
 #include "predator-and-prey/predatorAndPrey.h"
+#include "vih-evolution/vih_evolution.h"
 #include "native/unix.h"
 #include <fstream>
 
-/* Compilation: g++ main.cpp -o pnp.out -lsfml-graphics -lsfml-window -lsfml-system */
+/* Compilation: g++ main.cpp -o simulation.out -lsfml-graphics -lsfml-window -lsfml-system */
 
 #ifdef _WIN32
 #include <windows.h>
@@ -52,7 +53,7 @@ namespace {
     }
 
     bool isValidChoice(int option) {
-        return option > 0 && option <= NUM_OPTIONS;
+        return option > 0 && option <= NUM_OPTIONS + 1;
     }
 }
 
@@ -64,7 +65,8 @@ int main() {
         std::cout << "Which Cellular Automaton would you like to see?\n"
             << "1. Game of Life\n"
             << "2. Predator and Prey\n"
-            << NUM_OPTIONS << ". Exit\n";
+            << "3. VIH Evolution\n"
+            << NUM_OPTIONS + 1 << ". Exit\n";
         while (!isValidChoice(option)) {
             std::cin >> option;
             if (!isValidChoice(option)) {
@@ -80,7 +82,10 @@ int main() {
             case 2:
                 run<PredatorAndPrey>();
                 break;
-            case NUM_OPTIONS:
+            case 3:
+                run<VIHevolution>();
+                break;
+            case NUM_OPTIONS + 1:
                 exit = true;
                 break;
             default:

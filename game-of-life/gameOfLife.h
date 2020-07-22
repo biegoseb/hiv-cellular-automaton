@@ -5,7 +5,7 @@
 
 class GameOfLife : public CellularAutomaton {
     private:
-        enum Cell { Alive,Dead };
+        enum Cell { Alive, Dead };
         std::vector<Cell> myCells;
     public:
         GameOfLife(const Config& config, const Application& app);

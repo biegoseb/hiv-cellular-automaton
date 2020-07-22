@@ -7,8 +7,8 @@
 /* Lymphocyte T CD4+ */
 enum LymphocyteStatus {
     healthy,    // green
-    identified, // blue
-    latent,     // yellow
+    identified, // yellow
+    latent,     // blue
     infected,   // red
     dead        // black
 };
@@ -18,6 +18,7 @@ private:
     LymphocyteStatus status;
     float latentProb;
     float deadProb;
+    int infectedTime;
 public:
     Lymphocyte();
     sf::Color getColor();
@@ -26,14 +27,17 @@ public:
     void setStatus(LymphocyteStatus status);
     float getLatentProb() const;
     float getDeadProb() const;
+    void reproduce(Lymphocyte& otherLymphocyte);
+    void move(Lymphocyte& otherLymphocyte);
 };
 
 Lymphocyte::Lymphocyte() {
     int n = Random::get().intInRange(0, 1000);
-    if (n > 200)        status = LymphocyteStatus::healthy;
-    else if (n > 150)   status = LymphocyteStatus::identified;
-    else if (n > 100)   status = LymphocyteStatus::infected;
-    else                status = LymphocyteStatus::dead;
+    if (n > 300)        status = LymphocyteStatus::dead;
+    else if (n > 280)   status = LymphocyteStatus::infected;
+    else if (n > 260)   status = LymphocyteStatus::identified;
+    else if (n > 240)    status = LymphocyteStatus::latent;
+    else                status = LymphocyteStatus::healthy;
 
     latentProb = Random::get().floatInRange(0, 1);
     deadProb = Random::get().floatInRange(0, 1);
@@ -45,10 +49,10 @@ sf::Color Lymphocyte::getColor() {
         return sf::Color::Green;
         break;
     case LymphocyteStatus::identified:
-        return sf::Color::Blue;
+        return sf::Color::Yellow;
         break;
     case LymphocyteStatus::latent:
-        return sf::Color::Yellow;
+        return sf::Color::Blue;
         break;
     case LymphocyteStatus::infected:
         return sf::Color::Red;
@@ -101,4 +105,11 @@ float Lymphocyte::getDeadProb() const {
     return deadProb;
 }
 
+void Lymphocyte::reproduce(Lymphocyte& otherLymphocyte) {
+    otherLymphocyte.setStatus(LymphocyteStatus::healthy);
+}
+void Lymphocyte::move(Lymphocyte& otherLymphocyte) {
+    otherLymphocyte.setStatus(this->status);
+    this->status = LymphocyteStatus::dead;
+}
 #endif // LYMPHOCYTE_H

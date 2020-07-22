@@ -13,7 +13,7 @@ struct Config {
     sf::Color bgColor = {150, 150, 150};
     sf::Color fgColor = {25, 25, 25};
     unsigned cellSize = 4;
-    unsigned fps = 30;  
+    unsigned fps = 5;  
 };
 
 Config::Config(const sf::Vector2u& windowSize, unsigned cellSize) : windowSize(windowSize), cellSize(cellSize) {
