@@ -46,7 +46,7 @@ Lymphocyte::Lymphocyte() {
 sf::Color Lymphocyte::getColor() {
     switch (status) {
     case LymphocyteStatus::healthy:
-        return sf::Color::Green;
+        return {0, 128, 0};
         break;
     case LymphocyteStatus::identified:
         return sf::Color::Yellow;
@@ -55,7 +55,7 @@ sf::Color Lymphocyte::getColor() {
         return sf::Color::Blue;
         break;
     case LymphocyteStatus::infected:
-        return sf::Color::Red;
+        return {128, 0, 0};
         break;
     case LymphocyteStatus::dead:
         return sf::Color::Black;
